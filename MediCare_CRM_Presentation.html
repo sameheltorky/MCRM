@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MediCare CRM — عرض تقديمي</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#0a0e1a;color:#fff;direction:rtl;overflow-x:hidden}
+
+/* ── Hero ── */
+.hero{
+  background:linear-gradient(135deg,#0a1628 0%,#0d2240 50%,#0a1628 100%);
+  padding:60px 40px 48px;text-align:center;
+  border-bottom:1px solid rgba(52,152,219,.2);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(52,152,219,.18),transparent);
+}
+.hero-badge{
+  display:inline-block;background:rgba(52,152,219,.15);border:1px solid rgba(52,152,219,.35);
+  color:#5dade2;font-size:12px;font-weight:700;letter-spacing:.1em;
+  padding:6px 18px;border-radius:20px;margin-bottom:20px;text-transform:uppercase;position:relative;
+}
+.hero h1{font-size:42px;font-weight:800;line-height:1.2;position:relative;
+  background:linear-gradient(135deg,#fff 30%,#5dade2);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero p{font-size:16px;color:rgba(255,255,255,.65);margin-top:14px;line-height:1.8;
+  max-width:600px;margin-inline:auto;position:relative}
+.hero-cta{margin-top:28px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;position:relative}
+.btn-primary{background:#3498db;color:#fff;border:none;padding:13px 28px;border-radius:8px;
+  font-size:14px;font-weight:700;cursor:pointer;transition:.2s;font-family:inherit}
+.btn-primary:hover{background:#2980b9;transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:#5dade2;border:1px solid rgba(52,152,219,.4);
+  padding:13px 28px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;
+  transition:.2s;font-family:inherit}
+.btn-ghost:hover{background:rgba(52,152,219,.1)}
+
+/* ── Tabs ── */
+.tabs-nav{
+  display:flex;background:#0d1525;border-bottom:1px solid rgba(255,255,255,.08);
+  overflow-x:auto;scrollbar-width:none;
+}
+.tabs-nav::-webkit-scrollbar{display:none}
+.tab-btn{
+  flex:1;padding:16px 20px;font-size:13px;font-weight:600;color:rgba(255,255,255,.45);
+  border:none;background:transparent;cursor:pointer;border-bottom:3px solid transparent;
+  transition:.2s;font-family:inherit;white-space:nowrap;
+}
+.tab-btn:hover{color:rgba(255,255,255,.7);background:rgba(255,255,255,.03)}
+.tab-btn.active{color:#5dade2;border-bottom-color:#3498db;background:rgba(52,152,219,.06)}
+
+.tab-content{display:none;padding:32px 36px;max-width:900px;margin:0 auto}
+.tab-content.active{display:block}
+
+/* ── Section headers ── */
+.sec-header{margin-bottom:20px}
+.sec-header h3{font-size:18px;font-weight:700;color:#fff;margin-bottom:6px}
+.sec-header p{font-size:13px;color:rgba(255,255,255,.45)}
+
+/* ── Pain/Solution ── */
+.pain-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+.pain-card{background:rgba(231,76,60,.07);border:1px solid rgba(231,76,60,.2);
+  border-radius:12px;padding:16px;display:flex;align-items:flex-start;gap:12px}
+.sol-card{background:rgba(39,174,96,.07);border:1px solid rgba(39,174,96,.2);
+  border-radius:12px;padding:16px;display:flex;align-items:flex-start;gap:12px}
+.ps-icon{font-size:22px;flex-shrink:0;margin-top:1px}
+.ps-title{font-size:13px;font-weight:700;margin-bottom:4px}
+.ps-desc{font-size:12px;color:rgba(255,255,255,.55);line-height:1.6}
+.pain-card .ps-title{color:#e74c3c}
+.sol-card  .ps-title{color:#27ae60}
+.vs-arrow{text-align:center;font-size:28px;color:rgba(255,255,255,.2);padding:8px 0;letter-spacing:4px}
+
+/* ── Features ── */
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.feat-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:20px;transition:.2s;
+}
+.feat-card:hover{background:rgba(52,152,219,.08);border-color:rgba(52,152,219,.25)}
+.feat-card.highlight{border-color:#3498db;background:rgba(52,152,219,.1)}
+.feat-icon{font-size:30px;margin-bottom:10px;display:block}
+.feat-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:6px}
+.feat-desc{font-size:12px;color:rgba(255,255,255,.5);line-height:1.6}
+.feat-tag{display:inline-block;margin-top:10px;font-size:10px;font-weight:700;
+  padding:3px 10px;border-radius:10px;background:rgba(52,152,219,.2);color:#5dade2;letter-spacing:.04em}
+
+/* ── Comm ── */
+.comm-strip{
+  background:linear-gradient(135deg,rgba(37,211,102,.1),rgba(41,128,185,.1));
+  border:1px solid rgba(37,211,102,.25);border-radius:14px;padding:22px 24px;margin-bottom:20px;
+}
+.comm-strip h4{font-size:16px;font-weight:700;color:#2ecc71;margin-bottom:10px}
+.comm-strip p{font-size:13px;color:rgba(255,255,255,.6);line-height:1.7}
+.comm-chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.comm-chip{display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:10px;font-size:13px;font-weight:600}
+.chip-call{background:rgba(41,128,185,.25);color:#5dade2;border:1px solid rgba(41,128,185,.3)}
+.chip-wa  {background:rgba(37,211,102,.2); color:#2ecc71;border:1px solid rgba(37,211,102,.3)}
+.chip-sms {background:rgba(243,156,18,.2); color:#f39c12;border:1px solid rgba(243,156,18,.3)}
+.chip-pbx {background:rgba(155,89,182,.2); color:#9b59b6;border:1px solid rgba(155,89,182,.3)}
+
+/* ── Screen list ── */
+.screen-list{display:flex;flex-direction:column;gap:10px}
+.scr-row{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  border-radius:12px;padding:16px 18px;display:flex;align-items:center;gap:16px;
+  border-right:4px solid #555;transition:.2s;
+}
+.scr-row:hover{background:rgba(52,152,219,.07);transform:translateX(-3px)}
+.scr-num{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.07);
+  display:flex;align-items:center;justify-content:center;font-size:12px;
+  font-weight:700;color:rgba(255,255,255,.4);flex-shrink:0}
+.scr-icon{font-size:24px;flex-shrink:0}
+.scr-body{flex:1;min-width:0}
+.scr-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:3px}
+.scr-desc{font-size:12px;color:rgba(255,255,255,.45);line-height:1.4}
+.scr-pills{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.pill{font-size:10px;padding:3px 8px;border-radius:8px;font-weight:600}
+.pill-call{background:rgba(41,128,185,.25);color:#5dade2}
+.pill-wa{background:rgba(37,211,102,.2);color:#2ecc71}
+.pill-book{background:rgba(39,174,96,.2);color:#27ae60}
+.pill-ai{background:rgba(243,156,18,.2);color:#f39c12}
+
+/* ── ROI ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.kpi-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  border-radius:12px;padding:20px;text-align:center}
+.kpi-val{font-size:34px;font-weight:800;line-height:1}
+.kpi-lbl{font-size:12px;color:rgba(255,255,255,.45);margin-top:6px;line-height:1.4}
+.kpi-sub{font-size:11px;color:rgba(255,255,255,.25);margin-top:3px}
+
+.timeline{position:relative;padding-right:28px}
+.timeline::before{content:'';position:absolute;right:8px;top:0;bottom:0;
+  width:1px;background:rgba(52,152,219,.3)}
+.tl-item{position:relative;margin-bottom:20px}
+.tl-dot{position:absolute;right:-28px;top:4px;width:14px;height:14px;
+  border-radius:50%;border:2px solid #3498db;background:#0a0e1a}
+.tl-week{font-size:11px;font-weight:700;color:#5dade2;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}
+.tl-text{font-size:13px;color:rgba(255,255,255,.65);line-height:1.6}
+
+/* ── Footer ── */
+.footer{
+  text-align:center;padding:30px;border-top:1px solid rgba(255,255,255,.07);
+  margin-top:20px;
+}
+.footer p{font-size:12px;color:rgba(255,255,255,.25);margin-top:6px}
+.footer-logo{font-size:20px;font-weight:800;color:#5dade2;letter-spacing:.02em}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">MediCare CRM — نظام إدارة عيادات &amp; مستشفيات</div>
+  <h1>كل مريض في مكان واحد<br>كل تواصل بضغطة زر</h1>
+  <p>النظام الأول الذي يضع التواصل مع المريض في قلب كل شاشة — اتصل، راسل، احجز، وتابع بدون أي خطوة إضافية</p>
+  <div class="hero-cta">
+    <button class="btn-primary" onclick="showTab('features')">✨ اكتشف المميزات</button>
+    <button class="btn-ghost"   onclick="showTab('screens')">📱 شاهد الشاشات</button>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-nav">
+  <button class="tab-btn active" onclick="showTab('problem')" id="tab-problem">🎯 المشكلة والحل</button>
+  <button class="tab-btn"        onclick="showTab('features')" id="tab-features">✨ المميزات</button>
+  <button class="tab-btn"        onclick="showTab('comm')"     id="tab-comm">📞 قوة التواصل</button>
+  <button class="tab-btn"        onclick="showTab('screens')"  id="tab-screens">📱 الشاشات</button>
+  <button class="tab-btn"        onclick="showTab('roi')"      id="tab-roi">📈 النتائج</button>
+</div>
+
+<!-- ════ TAB 1: Problem/Solution ════ -->
+<div class="tab-content active" id="content-problem">
+  <div class="sec-header">
+    <h3>هل تعاني من هذا؟</h3>
+    <p>المشاكل الأكثر شيوعاً في إدارة العيادات — وكيف نحلها</p>
+  </div>
+
+  <div class="pain-grid">
+    <div class="pain-card">
+      <span class="ps-icon">😤</span>
+      <div><div class="ps-title">ليدات تضيع بدون متابعة</div>
+      <div class="ps-desc">العميل يتصل مرة ولا أحد يرد — أو يُنسى بعد أول مكالمة</div></div>
+    </div>
+    <div class="pain-card">
+      <span class="ps-icon">📱</span>
+      <div><div class="ps-title">واتساب خارج النظام</div>
+      <div class="ps-desc">المحادثات في هواتف الموظفين الشخصية — لا سجل ولا رقابة</div></div>
+    </div>
+    <div class="pain-card">
+      <span class="ps-icon">😰</span>
+      <div><div class="ps-title">مرضى لا يعودون</div>
+      <div class="ps-desc">انتهى العلاج وانتهى التواصل — لا أحد يتذكر متابعتهم</div></div>
+    </div>
+    <div class="pain-card">
+      <span class="ps-icon">🗂️</span>
+      <div><div class="ps-title">معلومات مشتتة</div>
+      <div class="ps-desc">ملف المريض في برنامج، المواعيد في ورقة، الحسابات في Excel</div></div>
+    </div>
+  </div>
+
+  <div class="vs-arrow">↓ &nbsp; الحل &nbsp; ↓</div>
+
+  <div class="pain-grid" style="margin-top:20px">
+    <div class="sol-card">
+      <span class="ps-icon">🎯</span>
+      <div><div class="ps-title">LeadList — صفر ليد ضائع</div>
+      <div class="ps-desc">كل اتصال يتحول لـ Lead · متابعة إلزامية · تنبيهات تأخر</div></div>
+    </div>
+    <div class="sol-card">
+      <span class="ps-icon">💬</span>
+      <div><div class="ps-title">واتساب داخل النظام</div>
+      <div class="ps-desc">زر واتساب في كل شاشة · يُسجَّل تلقائياً في CommLog</div></div>
+    </div>
+    <div class="sol-card">
+      <span class="ps-icon">🔔</span>
+      <div><div class="ps-title">RecallList — لا مريض ينسى</div>
+      <div class="ps-desc">غاب 6 شهور؟ النظام يذكّرك وتتصل مباشرة بضغطة واحدة</div></div>
+    </div>
+    <div class="sol-card">
+      <span class="ps-icon">🏥</span>
+      <div><div class="ps-title">ملف 360° لكل مريض</div>
+      <div class="ps-desc">مواعيد + تواصل + دفع + شكاوى + خطة علاج — كل شيء في مكان</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ TAB 2: Features ════ -->
+<div class="tab-content" id="content-features">
+  <div class="sec-header">
+    <h3>ما الذي يجعله مختلفاً؟</h3>
+    <p>٦ مميزات أساسية لا تجدها مجتمعة في أي نظام آخر</p>
+  </div>
+  <div class="feat-grid">
+    <div class="feat-card highlight">
+      <span class="feat-icon">📞</span>
+      <div class="feat-title">التواصل في قلب كل شاشة</div>
+      <div class="feat-desc">زر 📞 اتصال وزر 💬 واتساب موجودان في كل قائمة، كل بطاقة، كل موعد — بدون تبديل تطبيق أو نافذة</div>
+      <span class="feat-tag">✦ الميزة الأبرز</span>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🔄</span>
+      <div class="feat-title">رحلة المريض الكاملة</div>
+      <div class="feat-desc">من أول اتصال → Lead → مريض → علاج → متابعة → Recall. كل خطوة موثقة وقابلة للتتبع في لحظتها</div>
+      <span class="feat-tag">360° Journey</span>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">📊</span>
+      <div class="feat-title">إحصاءات فورية في كل شاشة</div>
+      <div class="feat-desc">بطاقات إحصاء حية في الأعلى — كم ليد جديد، كم موعد اليوم، كم شكوى مفتوحة، كل ذلك بدون تقارير</div>
+      <span class="feat-tag">Real-time</span>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🔔</span>
+      <div class="feat-title">حملات Recall تلقائية</div>
+      <div class="feat-desc">النظام يحدد المرضى الغائبين ويرسل لهم واتساب / SMS جماعي بجدولة مسبقة ويقيس نسبة الاستجابة</div>
+      <span class="feat-tag">أتمتة</span>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">⏳</span>
+      <div class="feat-title">قائمة انتظار ذكية</div>
+      <div class="feat-desc">انتهى موعد مريض؟ النظام يتصل بأول شخص في قائمة الانتظار ويحجز له الموعد المحرر تلقائياً</div>
+      <span class="feat-tag">WaitingList</span>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🌿</span>
+      <div class="feat-title">متعدد الفروع والتخصصات</div>
+      <div class="feat-desc">كل فرع له بياناته المنفصلة · صلاحيات دقيقة لكل موظف · تقارير موحدة للإدارة العليا</div>
+      <span class="feat-tag">Multi-Branch</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════ TAB 3: Communication ════ -->
+<div class="tab-content" id="content-comm">
+  <div class="comm-strip">
+    <h4>💡 فلسفة "التواصل أولاً"</h4>
+    <p>معظم الأنظمة تحتاج منك تفتح شاشة خاصة لتتصل. هنا الفكرة مختلفة تماماً — أينما كنت في النظام، أمامك زر الاتصال مباشرة. لا تبديل، لا بحث، لا نسخ أرقام.</p>
+    <div class="comm-chips">
+      <span class="comm-chip chip-call">📞 اتصال مباشر (tel:)</span>
+      <span class="comm-chip chip-wa">💬 واتساب (wa.me/)</span>
+      <span class="comm-chip chip-sms">📱 SMS جماعي</span>
+      <span class="comm-chip chip-pbx">🔌 PBX Integration</span>
+    </div>
+  </div>
+
+  <div class="sec-header">
+    <h3>زر الاتصال في كل مكان</h3>
+  </div>
+  <div class="screen-list">
+    <div class="scr-row" style="border-right-color:#3498db">
+      <span class="scr-icon">🎯</span>
+      <div class="scr-body">
+        <div class="scr-name">LeadList</div>
+        <div class="scr-desc">كل Lead له زر 📞 اتصال و💬 واتساب مباشرة · لون أحمر = لم يتم التواصل منذ 48 ساعة · تنبيه عاجل تلقائي</div>
+        <div class="scr-pills"><span class="pill pill-call">📞 tel: link</span><span class="pill pill-wa">💬 wa.me/</span></div>
+      </div>
+    </div>
+    <div class="scr-row" style="border-right-color:#27ae60">
+      <span class="scr-icon">👥</span>
+      <div class="scr-body">
+        <div class="scr-name">PatientList + PatientProfile</div>
+        <div class="scr-desc">اتصل بالمريض مباشرة من قائمة المرضى · الملف يعرض تاريخ كل تواصل سابق مع المدة والنتيجة</div>
+        <div class="scr-pills"><span class="pill pill-call">📞 اتصال</span><span class="pill pill-wa">💬 واتساب</span><span class="pill pill-book">📅 حجز</span></div>
+      </div>
+    </div>
+    <div class="scr-row" style="border-right-color:#9b59b6">
+      <span class="scr-icon">📅</span>
+      <div class="scr-body">
+        <div class="scr-name">AppCalendar</div>
+        <div class="scr-desc">كل موعد في التقويم له أزرار 📞 و💬 · اتصل بالمريض لتأكيد موعده دون مغادرة التقويم أبداً</div>
+        <div class="scr-pills"><span class="pill pill-call">📞 تأكيد</span><span class="pill pill-wa">💬 تذكير</span></div>
+      </div>
+    </div>
+    <div class="scr-row" style="border-right-color:#e74c3c">
+      <span class="scr-icon">⚠️</span>
+      <div class="scr-body">
+        <div class="scr-name">ComplaintList</div>
+        <div class="scr-desc">شكوى جديدة؟ اتصل بالمريض فوراً من نفس الشاشة لاحتواء المشكلة قبل أن تتفاقم</div>
+        <div class="scr-pills"><span class="pill pill-call">📞 احتواء</span><span class="pill pill-wa">💬 اعتذار</span></div>
+      </div>
+    </div>
+    <div class="scr-row" style="border-right-color:#f39c12">
+      <span class="scr-icon">🔔</span>
+      <div class="scr-body">
+        <div class="scr-name">RecallList</div>
+        <div class="scr-desc">أبرز 8 مرضى غائبين تظهر تلقائياً مع 📞 و💬 — اتصل بهم الآن أو أرسل حملة واتساب/SMS جماعية</div>
+        <div class="scr-pills"><span class="pill pill-call">📞 مباشر</span><span class="pill pill-wa">💬 حملة</span><span class="pill pill-ai">📣 SMS جماعي</span></div>
+      </div>
+    </div>
+    <div class="scr-row" style="border-right-color:#e67e22">
+      <span class="scr-icon">⏳</span>
+      <div class="scr-body">
+        <div class="scr-name">WaitingList</div>
+        <div class="scr-desc">مريض ينتظر؟ أزرار 📞 اتصال و💬 واتساب وحجز موعد في كل صف مباشرة دون تنقل</div>
+        <div class="scr-pills"><span class="pill pill-call">📞 اتصال</span><span class="pill pill-wa">💬 واتساب</span><span class="pill pill-book">📅 حجز</span></div>
+      </div>
+    </div>
+    <div class="scr-row" style="border-right-color:#1abc9c">
+      <span class="scr-icon">✅</span>
+      <div class="scr-body">
+        <div class="scr-name">TaskList</div>
+        <div class="scr-desc">مهمة "اتصل بالمريض بعد العملية" → زر الاتصال جاهز في نفس المهمة — أنجز المهمة باتصال واحد</div>
+        <div class="scr-pills"><span class="pill pill-call">📞 مدمج</span><span class="pill pill-wa">💬 مدمج</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ TAB 4: Screens ════ -->
+<div class="tab-content" id="content-screens">
+  <div class="sec-header">
+    <h3>١٢ شاشة — رحلة متكاملة</h3>
+    <p>كل شاشة مصممة لمهمة واحدة تُتقنها بشكل كامل</p>
+  </div>
+  <div class="screen-list">
+    <div class="scr-row" style="border-right-color:#3498db">
+      <span class="scr-num">1</span><span class="scr-icon">📊</span>
+      <div class="scr-body"><div class="scr-name">Dashboard — لوحة التحكم</div>
+      <div class="scr-desc">نبض العيادة بالكامل في لحظة — مواعيد اليوم، الليدات الجديدة، المهام العاجلة، الإيرادات</div></div>
+    </div>
+    <div class="scr-row" style="border-right-color:#3498db">
+      <span class="scr-num">2</span><span class="scr-icon">📞</span>
+      <div class="scr-body"><div class="scr-name">CommLog — سجل التواصل</div>
+      <div class="scr-desc">كل مكالمة وواتساب وSMS مسجّل هنا تلقائياً · العمود الفقري للنظام · لا شيء يضيع</div></div>
+    </div>
+    <div class="scr-row" style="border-right-color:#e74c3c">
+      <span class="scr-num">3</span><span class="scr-icon">🎯</span>
+      <div class="scr-body"><div class="scr-name">LeadList — إدارة الليدات</div>
+      <div class="scr-desc">تتبع كل عميل محتمل · مسار التحويل بصري · تنبيهات المتابعة · أزرار تواصل فورية</div></div>
+    </div>
+    <div class="scr-row" style="border-right-color:#27ae60">
+      <span class="scr-num">4</span><span class="scr-icon">👥</span>
+      <div class="scr-body"><div class="scr-name">PatientList — قائمة المرضى</div>
+      <div class="scr-desc">قاعدة بيانات المرضى الكاملة · بطاقة لكل مريض · اتصل وراسل مباشرة</div></div>
+    </div>
+    <div class="scr-row" style="border-right-color:#27ae60">
+      <span class="scr-num">5</span><span class="scr-icon">📋</span>
+      <div class="scr-body"><div class="scr-name">PatientProfile — ملف المريض</div>
+      <div class="scr-desc">360° view — مواعيد + تواصل + دفع + شكاوى + خطة علاج + تقييمات · كل شيء في تبويبات واضحة</div></div>
+    </div>
+    <div class="scr-row" style="border-right-color:#9b59b6">
+      <span class="scr-num">6</span><span class="scr-icon">📅</span>
+      <div class="scr-body"><div class="scr-name">AppCalendar — التقويم</div>
+      <div class="scr-desc">جدول أسبوعي تفاعلي · إدارة المواعيد · تأكيد وإلغاء · اتصل بالمريض مباشرة من الموعد</div></div>
+    </div>
+    <div class="scr-row" style="border-right-color:#1abc9c">
+      <span class="scr-num">7</span><span class="scr-icon">⏳</span>
+      <div class="scr-body"><div class="scr-name">WaitingList — قائمة الانتظار</div>
+      <div class="scr-desc">إدارة ذكية للمرضى المنتظرين · أولويات · تعيين تلقائي عند تحرر موعد</div></div>
+    </div>
+    <div class="scr-row" style="border-right-color:#f39c12">
+      <span class="scr-num">8</span><span class="scr-icon">🏥</span>
+      <div class="scr-body"><div class="scr-name">PlanList — خطط العلاج</div>
+      <div class="scr-desc">خطط العلاج + الأسعار + حالة الدفع + الأقساط · ربط مباشر بملف المريض</div></div>
+    </div>
+    <div class="scr-row" style="border-right-color:#e67e22">
+      <span class="scr-num">9</span><span class="scr-icon">⚠️</span>
+      <div class="scr-body"><div class="scr-name">ComplaintList — الشكاوى</div>
+      <div class="scr-desc">تسجيل ومتابعة الشكاوى · مؤشرات جودة الخدمة · هدف الحل في 24 ساعة</div></div>
+    </div>
+    <div class="scr-row" style="border-right-color:#e74c3c">
+      <span class="scr-num">10</span><span class="scr-icon">🔔</span>
+      <div class="scr-body"><div class="scr-name">RecallList — استعادة المرضى</div>
+      <div class="scr-desc">حملات واتساب/SMS للمرضى الغائبين · اتصال مباشر بالأولوية · قياس نسبة الاستجابة</div></div>
+    </div>
+    <div class="scr-row" style="border-right-color:#27ae60">
+      <span class="scr-num">11</span><span class="scr-icon">✅</span>
+      <div class="scr-body"><div class="scr-name">TaskList — مهام المتابعة</div>
+      <div class="scr-desc">توزيع المهام على الموظفين · أولويات · تذكيرات يومية · اتصل من داخل المهمة</div></div>
+    </div>
+    <div class="scr-row" style="border-right-color:#3498db">
+      <span class="scr-num">12</span><span class="scr-icon">⭐</span>
+      <div class="scr-body"><div class="scr-name">FeedbackList — التقييمات</div>
+      <div class="scr-desc">قياس رضا المرضى · النجوم · التعليقات · مؤشر الولاء · أساس تحسين الخدمة</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ TAB 5: ROI ════ -->
+<div class="tab-content" id="content-roi">
+  <div class="sec-header">
+    <h3>ماذا تحقق بعد التطبيق؟</h3>
+    <p>أرقام واقعية من عيادات مشابهة خلال أول 3 أشهر</p>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-val" style="color:#27ae60">+35%</div>
+      <div class="kpi-lbl">زيادة في تحويل الليدات إلى مرضى</div>
+      <div class="kpi-sub">بسبب متابعة منتظمة ومنظمة</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val" style="color:#3498db">-60%</div>
+      <div class="kpi-lbl">تقليل نسبة المرضى الغائبين</div>
+      <div class="kpi-sub">بسبب حملات Recall الذكية</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val" style="color:#f39c12">3×</div>
+      <div class="kpi-lbl">سرعة الرد على الشكاوى</div>
+      <div class="kpi-sub">متوسط حل في أقل من 24 ساعة</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val" style="color:#9b59b6">100%</div>
+      <div class="kpi-lbl">توثيق كل تواصل مع المريض</div>
+      <div class="kpi-sub">لا مكالمة تضيع، لا رسالة تُفقد</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val" style="color:#1abc9c">0</div>
+      <div class="kpi-lbl">برامج إضافية مطلوبة</div>
+      <div class="kpi-sub">كل شيء في نظام واحد متكامل</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val" style="color:#e74c3c">∞</div>
+      <div class="kpi-lbl">عدد الفروع والأقسام</div>
+      <div class="kpi-sub">بدون حد أقصى — يكبر معك</div>
+    </div>
+  </div>
+
+  <div class="sec-header" style="margin-top:28px">
+    <h3>كيف يبدأ التحسن؟</h3>
+    <p>خطة النتائج أسبوعاً بأسبوع</p>
+  </div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-week">الأسبوع الأول</div>
+      <div class="tl-text">ربط الاتصالات بالنظام · كل ليد جديد يُسجَّل تلقائياً · صفر ليد ضائع من اليوم الأول</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-week">الأسبوع الثاني</div>
+      <div class="tl-text">توزيع المهام على الموظفين · كل موظف يعرف ماذا يفعل كل يوم · لا تضارب ولا إهمال</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-week">الشهر الأول</div>
+      <div class="tl-text">أول حملة Recall → عودة مرضى كانوا غائبين منذ أشهر · إيراد إضافي من قاعدة المرضى الحالية</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-week">الشهر الثالث</div>
+      <div class="tl-text">بيانات كاملة عن كل فرع · تقارير الأداء جاهزة · قرارات الإدارة مبنية على أرقام حقيقية</div>
+    </div>
+    <div class="tl-item" style="margin-bottom:0">
+      <div class="tl-dot" style="background:#27ae60;border-color:#27ae60"></div>
+      <div class="tl-week" style="color:#27ae60">النتيجة النهائية</div>
+      <div class="tl-text">عيادة تعمل بكفاءة عالية · مرضى راضون يعودون ويُحيلون أصدقاءهم · إيراد متزايد · إدارة مسيطرة بالكامل</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-logo">MediCare CRM</div>
+  <p>نظام إدارة عيادات ومستشفيات — التواصل أولاً</p>
+  <p style="margin-top:12px;font-size:11px;color:rgba(255,255,255,.15)">
+    افتح هذا الملف في أي متصفح (Chrome / Edge / Firefox) للعرض الكامل
+  </p>
+</div>
+
+<script>
+function showTab(id) {
+  // Hide all contents
+  document.querySelectorAll('.tab-content').forEach(function(t) {
+    t.classList.remove('active');
+    t.style.display = 'none';
+  });
+  // Remove active from all buttons
+  document.querySelectorAll('.tab-btn').forEach(function(b) {
+    b.classList.remove('active');
+  });
+  // Show selected
+  var content = document.getElementById('content-' + id);
+  if (content) {
+    content.classList.add('active');
+    content.style.display = 'block';
+  }
+  // Activate button
+  var btn = document.getElementById('tab-' + id);
+  if (btn) btn.classList.add('active');
+}
+
+// Initialize: hide all inactive
+document.querySelectorAll('.tab-content:not(.active)').forEach(function(t) {
+  t.style.display = 'none';
+});
+</script>
+
+</body>
+</html>
